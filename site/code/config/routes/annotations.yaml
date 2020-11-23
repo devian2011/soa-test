@@ -1,0 +1,7 @@
+controllers_weather:
+    resource: ../../src/IO/Http/Weather/Controller/
+    type: annotation
+
+kernel:
+    resource: ../../src/Kernel.php
+    type: annotation

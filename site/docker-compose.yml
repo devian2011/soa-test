@@ -1,0 +1,20 @@
+version: '3'
+services: 
+   site_nginx:
+     image: accounting_nginx
+     build: ./code/docker/develop/nginx
+     volumes:
+       - ./code/docker/develop/nginx/conf.d:/etc/nginx/conf.d
+       - ./code:/var/www/app
+     ports:
+       - 8080:80
+   site: 
+     image: deviandevstudio/symfony:tests
+     volumes: 
+       - ./code:/var/www/app
+
+
+networks:
+  default:
+    external:
+      name: weather_soa_network

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section style="margin-top: 30px">
+        <h3>Find temperature for date</h3>
+        <form class="form-inline needs-validation get-date-temp-form">
+            <label class="sr-only" for="inlineFormTemperatureDate">Date</label>
+            <input type="date" name="date" class="form-control mb-2 mr-sm-2" id="inlineFormTemperatureDate"
+                   placeholder="2020-01-01">
+            <button type="button" id="get-date-temp-form-submit" class="btn btn-primary mb-2">Submit</button>
+        </form>
+        <div class="row">
+            <div class="col">
+                <div class="alert get-date-temp-form-result">
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="row">
+            <div class="col">
+                <h3>Temperature for last 30 days</h3>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Temperature</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for temp in temperatures %}
+                    <tr>
+                        <th scope="row">{{ temp.getDate() }}</th>
+                        <td>{{ temp.getTemp() }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/weather/index.js') }}"></script>
+{% endblock %}

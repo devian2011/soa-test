@@ -1,0 +1,40 @@
+version: '3'
+services: 
+   weather_nginx:
+     image: accounting_nginx
+     build: ./code/docker/develop/nginx
+     volumes:
+       - ./code/docker/develop/nginx/conf.d:/etc/nginx/conf.d
+       - ./code:/var/www/app
+     ports:
+       - 8082:80
+     depends_on: 
+       - weather
+   weather: 
+     image: deviandevstudio/symfony:tests
+     volumes: 
+       - ./code:/var/www/app
+     depends_on:
+       - weather_db
+       - weather_db_test
+   weather_db:
+     image: postgres
+     environment:
+       POSTGRES_DB: weather
+       POSTGRES_USER: weather
+       POSTGRES_PASSWORD: weather
+     volumes:
+       - ./psql/weather:/var/lib/postgresql
+   weather_db_test:
+     image: postgres
+     environment:
+       POSTGRES_DB: weather
+       POSTGRES_USER: weather
+       POSTGRES_PASSWORD: weather
+     volumes:
+       - ./psql/weather:/var/lib/postgresql
+
+networks:
+   default:
+     external:
+       name: weather_soa_network
